@@ -1,40 +1,39 @@
 <?php
 //Login em php
 include('../login.php');
-
 //se existe e-mail ou senha
 if(isset($_POST['email']) || isset($_Post['senha'])){
     if(strlen($_POST['email']) == 0){
         echo "Digite seu email";
-    }
-    else if(strlen($_POST['senha']) == 0){
-        echo "Digite sua senha";
-    }
-    else{
-        $email = $mysqli ->real_escape_string($_POST['email']);
-        $senha = $mysqli->real_escape_string($_POST['senha']);
-
-        $sql_code = "SELECT * FROM usuarios WHERE email = '$email' AND senha = '$senha'";
-        $sql_query = $mysqli->query($sql_code) or die("Falha Na Execução Do Código SQL:".$mysqli->error);
-
-        $result = $mysqli->query($sql);
-
-        if($result->num_rows == 1){
-            echo "Login efetuado com sucesso";
-            $username = $sql_query ->fetch_assoc();
-
-            if(!isset($_SESSION)){
-                session_start();
-            }
-
-            $_SESSION['user'] = $username['id'];
+        }
+        else if(strlen($_POST['senha']) == 0){
+            echo "Digite sua senha";
         }
         else{
-            echo "Email ou senha incorretos";
-        }
-    }
+            $email = $mysqli ->real_escape_string($_POST['email']);
+            $senha = $mysqli->real_escape_string($_POST['senha']);
 
-}
+            $sql_code = "SELECT * FROM user WHERE email = '$email' AND senha = '$senha'";
+            $sql_query = $mysqli->query($sql_code) or die("Falha Na Execução Do Código SQL:".$mysqli->error);
+
+            $result = $mysqli->query($sql);
+
+            if($result->num_rows == 1){
+                echo "Login efetuado com sucesso";
+                $username = $sql_query ->fetch_assoc();
+
+                if(!isset($_SESSION)){
+                    session_start();
+                }
+
+                $_SESSION['user'] = $username['id'];
+            }
+            else{
+                echo "Email ou senha incorretos";
+            }
+        }
+
+    }
 
 ?>
 
