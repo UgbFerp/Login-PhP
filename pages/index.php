@@ -13,12 +13,12 @@ if(isset($_POST['email']) || isset($_Post['senha'])){
             $email = $mysqli ->real_escape_string($_POST['email']);
             $senha = $mysqli->real_escape_string($_POST['senha']);
 
-            $sql_code = "SELECT * FROM user WHERE email = '$email' AND senha = '$senha'";
+            $sql_code = "SELECT * FROM users WHERE email = '$email' AND senha = '$senha'";
             $sql_query = $mysqli->query($sql_code) or die("Falha Na Execução Do Código SQL:".$mysqli->error);
 
-            $result = $mysqli->query($sql);
+            $result = $sql_query ->num_rows;
 
-            if($result->num_rows == 1){
+            if($result == 1){
                 echo "Login efetuado com sucesso";
                 $username = $sql_query ->fetch_assoc();
 
@@ -26,7 +26,10 @@ if(isset($_POST['email']) || isset($_Post['senha'])){
                     session_start();
                 }
 
-                $_SESSION['user'] = $username['id'];
+                $_SESSION['id'] = $username['id'];
+                $_SESSION['nome'] = $username['nome'];
+
+                header("Location: painel.php");
             }
             else{
                 echo "Email ou senha incorretos";
