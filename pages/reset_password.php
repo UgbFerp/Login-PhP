@@ -54,12 +54,16 @@ while ($row = $result->fetch_assoc()) {
 mysqli_query($mysqli, "INSERT INTO confirmations (email, code, action) VALUES ('$email', '$code', '$action')");
 
 // Send the confirmation email
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 $to = $email;
+$from = 'gustavogoncalves@ugb.edu.br';
 $subject = 'Confirm your account changes';
 $message = "Please click the following link to confirm your $action: http://loginphp/pages/confirm.php?code=$code";
-$headers = 'From: gustavogoncalves@ugb.edu.br' . "\r\n" .
+$headers = "From: $from" . "\r\n" .
     "Reply-To: $email" . "\r\n" .
     'X-Mailer: PHP/' . phpversion();
 mail($to, $subject, $message, $headers);
+echo "The email message was sent.";
 
 ?>
