@@ -1,43 +1,38 @@
 <?php
 //Login em php
-include('../login.php');
+include('../pages/login.php');
 //se existe e-mail ou senha
-if(isset($_POST['email']) || isset($_Post['senha'])){
-    if(strlen($_POST['email']) == 0){
+if (isset($_POST['email']) || isset($_Post['senha'])) {
+    if (strlen($_POST['email']) == 0) {
         echo "Digite seu email";
-        }
-        else if(strlen($_POST['senha']) == 0){
-            echo "Digite sua senha";
-        }
-        else{
-            $email = $mysqli ->real_escape_string($_POST['email']);
-            $senha = $mysqli->real_escape_string($_POST['senha']);
+    } else if (strlen($_POST['senha']) == 0) {
+        echo "Digite sua senha";
+    } else {
+        $email = $mysqli->real_escape_string($_POST['email']);
+        $senha = $mysqli->real_escape_string($_POST['senha']);
 
-            $sql_code = "SELECT * FROM users WHERE email = '$email' AND senha = '$senha'";
-            $sql_query = $mysqli->query($sql_code) or die("Falha Na Execução Do Código SQL:".$mysqli->error);
+        $sql_code = "SELECT * FROM users WHERE email = '$email' AND senha = '$senha'";
+        $sql_query = $mysqli->query($sql_code) or die("Falha Na Execução Do Código SQL:" . $mysqli->error);
 
-            $result = $sql_query ->num_rows;
+        $result = $sql_query->num_rows;
 
-            if($result == 1){
-                echo "Login efetuado com sucesso";
-                $username = $sql_query ->fetch_assoc();
+        if ($result == 1) {
+            echo "Login efetuado com sucesso";
+            $username = $sql_query->fetch_assoc();
 
-                if(!isset($_SESSION)){
-                    session_start();
-                }
+            if (!isset($_SESSION)) {
+                session_start();
 
                 $_SESSION['id'] = $username['id'];
                 $_SESSION['nome'] = $username['nome'];
 
-                header("Location: painel.php");
+                header("Location: ../pages/painel.php");
             }
-            else{
-                echo "Email ou senha incorretos";
-            }
+        } else {
+            echo "Email ou senha incorretos";
         }
-
     }
-
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +44,7 @@ if(isset($_POST['email']) || isset($_Post['senha'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UGB Format</title>
 </head>
+
 <body>
     <header>
         <h1>Login</h1>
@@ -63,6 +59,9 @@ if(isset($_POST['email']) || isset($_Post['senha'])){
                 <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required>
             </section>
             <input type="submit" value="Entrar">
+            <button>
+                <a href="../pages/reset_password.php">esqueci senha</a>
+            </button>
         </form>
     </main>
     <footer>
@@ -71,4 +70,5 @@ if(isset($_POST['email']) || isset($_Post['senha'])){
         </p>
     </footer>
 </body>
+
 </html>
