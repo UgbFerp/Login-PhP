@@ -12,8 +12,7 @@
                 $arrid +=  1;
             }
         }
-
-        echo "<tr><td>" . $row["id"] . "</td><td>" . $row["email"] . "</td><td>" . $row["code"] . "</td><td>" . $row["action"] . "</td></tr>";
+        echo "<tr><td>" . $row["id"] . "</td><td>" . $row["email"] . "</td><td>" . $row["code"] . "</td><td>" . $row["act"] . "</td></tr>";
     }
 
 ?>

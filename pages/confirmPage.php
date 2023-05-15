@@ -7,21 +7,27 @@
 </form>
 <?php
 include('confirm.php');
-
-$code = $_POST['code'];
+if (isset($_POST) && !empty($_POST)) {
+    $code = $_POST['code'];
+} else {
+    $code = null;
+}
 
 if ($mysqli->connect_errno) {
     echo "Falha ao conectar: " . $mysqli->connect_error;
     exit();
 }
+
 $Valid = $mysqli->query("SELECT * FROM confirmations WHERE code = '$code'");
-if ($Valid->num_rows > 0) {
-    // O código é válido
-    echo "Código válido!";
-    
-    header("Location:update.php");
-} else {
-    // O código é inválido
-    echo "Código inválido!";
+if (isset($_POST) && !empty($_POST)) {
+    if ($Valid->num_rows > 0) {
+        // O código é válido
+        echo "Código válido!";
+        // $codeaction = 
+        header("Location:update.php");
+    } else {
+        // O código é inválido
+        echo "Código inválido!";
+    }
 }
 ?>

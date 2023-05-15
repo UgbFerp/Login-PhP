@@ -78,24 +78,24 @@ echo "<tr><th>Id</th><th>Usário</th><th>Email</th><th>Senha</th></tr>";
 // Token
 while ($row = $resultToken->fetch_assoc()) {
     $id = $arrid;
-    echo "<tr><td>" . $row["id"] . "</td><td>" . $row["email"] . "</td><td>" . $row["code"] . "</td><td>" . $row["action"] . "</td></tr>";
+    echo "<tr><td>" . $row["id"] . "</td><td>" . $row["email"] . "</td><td>" . $row["code"] . "</td><td>" . $row["act"] . "</td></tr>";
 }
 // ************************
 // Insert the confirmation code into the database
 
-mysqli_query($mysqli, "INSERT INTO confirmations (`id`, `email`, `code`, `action`) VALUES ('$id','$email', '$code', '$action')");
+mysqli_query($mysqli, "INSERT INTO confirmations (`id`, `email`, `code`, `act`) VALUES ('$id','$email', '$code', '$action')");
 
 // Send the confirmation email
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-$to = $email;
-$from = 'gustavogoncalves@ugb.edu.br';
-$subject = 'Confirm your account changes';
-$message = "Please click the following link to confirm your $action: http://loginphp/pages/confirm.php?code=$code";
-$headers = "From: $from" . "\r\n" .
-    "Reply-To: $email" . "\r\n" .
-    'X-Mailer: PHP/' . phpversion();
-mail($to, $subject, $message, $headers);
-echo "The email message was sent.";
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// $to = $email;
+// $from = 'gustavogoncalves@ugb.edu.br';
+// $subject = 'Confirm your account changes';
+// $message = "Please click the following link to confirm your $action: http://loginphp/pages/confirm.php?code=$code";
+// $headers = "From: $from" . "\r\n" .
+//     "Reply-To: $email" . "\r\n" .
+//     'X-Mailer: PHP/' . phpversion();
+// mail($to, $subject, $message, $headers);
+// echo "The email message was sent.";
 
 ?>
